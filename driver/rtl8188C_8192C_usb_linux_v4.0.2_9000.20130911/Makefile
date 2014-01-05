@@ -236,6 +236,16 @@ ifeq ($(CONFIG_INTEL_WIDI), y)
 EXTRA_CFLAGS += -DCONFIG_INTEL_WIDI
 endif
 
+ifeq ($(CONFIG_PLATFORM_BEAGLEBONE), y)
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+ARCH=arm
+CROSS_COMPILE := arm-linux-gnueabi-
+KVER  := $(shell uname -r)
+KSRC ?= /lib/modules/$(KVER)/build
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+INSTALL_PREFIX :=
+endif
+
 ifeq ($(CONFIG_PLATFORM_I386_PC), y)
 EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
 SUBARCH := $(shell uname -m | sed -e s/i.86/i386/)
